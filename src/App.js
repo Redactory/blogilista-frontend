@@ -11,6 +11,9 @@ function App() {
   const [password, setPassword] = useState('');
   const [user, setUser] = useState(null);
   const [blogs, setBlogs] = useState([]);
+  const [title, setTitle] = useState('');
+  const [author, setAuthor] = useState('');
+  const [url, setUrl] = useState('');
 
   useEffect(()=> {
     const loggedUserJSON = window.localStorage.getItem('loggedUser');
@@ -28,6 +31,18 @@ function App() {
   function handlePassword(event) {
     setPassword(event.target.value);
   };
+
+  function handleTitle(event) {
+    setTitle(event.target.value);
+  }
+
+  function handleAuthor(event) {
+    setAuthor(event.target.value);
+  }
+
+  function handleUrl(event) {
+    setUrl(event.target.value);
+  }
 
   function handleToken(token) {
     Blogs.setToken(token);
@@ -52,6 +67,19 @@ function App() {
     }
   };
 
+  const handleCreateBlog = async (event) => {
+    event.preventDefault();
+
+    const newBlogData = {title, author, url};
+    const savedBlog = await Blogs.createBlog(newBlogData);
+
+    const newBlogList = blogs.map(element => element);
+    newBlogList.push(savedBlog);
+    setBlogs(newBlogList);
+
+    return savedBlog;
+  }
+
   return (
     <div>
       {
@@ -68,6 +96,13 @@ function App() {
         blogs={blogs}
         setUser={setUser}
         logout={loginService.logout}
+        title={title}
+        author={author}
+        url={url}
+        handleTitle={handleTitle}
+        handleAuthor={handleAuthor}
+        handleUrl={handleUrl}
+        handleCreateBlog={handleCreateBlog}
         />
       }
     </div>
