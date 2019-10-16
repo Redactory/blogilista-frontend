@@ -12,6 +12,15 @@ function App() {
   const [user, setUser] = useState(null);
   const [blogs, setBlogs] = useState([]);
 
+  useEffect(()=> {
+    const loggedUserJSON = window.localStorage.getItem('loggedUser');
+    if(loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON);
+      setUser(user);
+      handleToken(user.token);
+    }
+  }, []);
+
   function handleUsername(event) {
     setUsername(event.target.value);
   };
@@ -20,16 +29,23 @@ function App() {
     setPassword(event.target.value);
   };
 
+  function handleToken(token) {
+    Blogs.setToken(token);
+  }
+
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
       const user = await loginService.login({username, password});
       const blogs = await Blogs.getAll();
 
+      window.localStorage.setItem('loggedUser', JSON.stringify(user));
+
       setUser(user);
       setBlogs(blogs);
       setUsername('');
       setPassword('');
+      handleToken(user.token);
     } catch(error) {
       console.log('TULI ONGELMIA...');
       console.log(error);
@@ -50,6 +66,8 @@ function App() {
         <MainView
         user={user}
         blogs={blogs}
+        setUser={setUser}
+        logout={loginService.logout}
         />
       }
     </div>

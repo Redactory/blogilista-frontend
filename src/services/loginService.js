@@ -7,6 +7,12 @@ const login = async (credentials) => {
     return response.data;
 }
 
+const logout = (setUser) => {
+    window.localStorage.removeItem('loggedUser');
+    setUser(null);
+}
+
 export default {
-    login
+    login,
+    logout
 }
