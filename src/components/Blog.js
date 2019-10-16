@@ -1,8 +1,12 @@
 import React from 'react'
-const Blog = ({ blog }) => (
-  <div>
-    {blog.title} {blog.author}
-  </div>
-)
+function Blog(props){
+  //console.log("BLOGIT");
+  //console.log(props);
+  return (
+    <div>
+      {props.title} {props.author}
+    </div>
+  )
+}
 
 export default Blog

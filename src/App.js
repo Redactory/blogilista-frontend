@@ -1,26 +1,59 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
+import Login from './components/Login';
+import Blogs from './services/blogs';
+import MainView from './components/MainView';
+import loginService from './services/loginService';
+
 function App() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [user, setUser] = useState(null);
+  const [blogs, setBlogs] = useState([]);
+
+  function handleUsername(event) {
+    setUsername(event.target.value);
+  };
+
+  function handlePassword(event) {
+    setPassword(event.target.value);
+  };
+
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    try {
+      const user = await loginService.login({username, password});
+      const blogs = await Blogs.getAll();
+
+      setUser(user);
+      setBlogs(blogs);
+      setUsername('');
+      setPassword('');
+    } catch(error) {
+      console.log('TULI ONGELMIA...');
+      console.log(error);
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {
+        user === null ? 
+        <Login
+          username={username}
+          password={password}
+          handleUsername={handleUsername}
+          handlePassword={handlePassword}
+          handleLogin={handleLogin}
+        /> : 
+        <MainView
+        user={user}
+        blogs={blogs}
+        />
+      }
     </div>
-  );
+  )
 }
 
 export default App;
