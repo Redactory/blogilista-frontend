@@ -5,6 +5,7 @@ import Login from './components/Login';
 import Blogs from './services/blogs';
 import MainView from './components/MainView';
 import loginService from './services/loginService';
+import notificationService from './services/notificationService';
 
 function App() {
   const [username, setUsername] = useState('');
@@ -14,6 +15,8 @@ function App() {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [url, setUrl] = useState('');
+  const [notificationMessage, setNotificationMessage] = useState('');
+  const [notificationType, setNotificationType] = useState('');
 
   useEffect(()=> {
     const loggedUserJSON = window.localStorage.getItem('loggedUser');
@@ -62,8 +65,8 @@ function App() {
       setPassword('');
       handleToken(user.token);
     } catch(error) {
-      console.log('TULI ONGELMIA...');
-      console.log(error);
+      notificationService.showNotification(error.response.data.error, 'error', setNotificationMessage, setNotificationType);
+
     }
   };
 
@@ -76,6 +79,9 @@ function App() {
     const newBlogList = blogs.map(element => element);
     newBlogList.push(savedBlog);
     setBlogs(newBlogList);
+
+    const message = `a new blog ${savedBlog.title} by ${savedBlog.author} added`;
+    notificationService.showNotification(message, 'passing', setNotificationMessage, setNotificationType);
 
     return savedBlog;
   }
@@ -90,6 +96,8 @@ function App() {
           handleUsername={handleUsername}
           handlePassword={handlePassword}
           handleLogin={handleLogin}
+          notificationMessage={notificationMessage}
+          notificationType={notificationType}
         /> : 
         <MainView
         user={user}
@@ -103,6 +111,8 @@ function App() {
         handleAuthor={handleAuthor}
         handleUrl={handleUrl}
         handleCreateBlog={handleCreateBlog}
+        notificationMessage={notificationMessage}
+        notificationType={notificationType}
         />
       }
     </div>

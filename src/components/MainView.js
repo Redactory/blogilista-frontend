@@ -2,6 +2,7 @@ import React from 'react';
 import Blog from './Blog';
 import Logout from './Logout';
 import BlogCreation from './BlogCreation';
+import Notification from './Notification';
 
 function populateBlogs(blogs) {
     const blogElements = [];
@@ -26,6 +27,10 @@ export default function MainView(props) {
         <div>
             <div style={passingNotification}>
                 <h2>blogs</h2>
+                <Notification 
+                    notificationMessage={props.notificationMessage}
+                    notificationType={props.notificationType}
+                    />
                 <span> {props.user.name} logged in</span>
                 <Logout setUser={props.setUser} logout={props.logout}/>
             </div>
