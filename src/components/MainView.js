@@ -34,7 +34,6 @@ export default function MainView(props) {
                 <span> {props.user.name} logged in</span>
                 <Logout setUser={props.setUser} logout={props.logout}/>
             </div>
-            <h2>create new</h2>
             <BlogCreation
                 title={props.title}
                 author={props.author}
@@ -43,6 +42,10 @@ export default function MainView(props) {
                 handleAuthor={props.handleAuthor}
                 handleUrl={props.handleUrl}
                 handleCreateBlog={props.handleCreateBlog}
+                blogIsVisible={props.blogIsVisible}
+                setBlogIsVisible={props.setBlogIsVisible}
+                buttonText={props.buttonText}
+                setButtonText={props.setButtonText}
             />
             {populateBlogs(props.blogs)}
         </div>

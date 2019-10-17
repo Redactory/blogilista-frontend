@@ -17,6 +17,8 @@ function App() {
   const [url, setUrl] = useState('');
   const [notificationMessage, setNotificationMessage] = useState('');
   const [notificationType, setNotificationType] = useState('');
+  const [blogIsVisible, setBlogIsVisible] = useState(false);
+  const [buttonText, setButtonText] = useState('new note');
 
   useEffect(()=> {
     const loggedUserJSON = window.localStorage.getItem('loggedUser');
@@ -113,6 +115,10 @@ function App() {
         handleCreateBlog={handleCreateBlog}
         notificationMessage={notificationMessage}
         notificationType={notificationType}
+        blogIsVisible={blogIsVisible}
+        setBlogIsVisible={setBlogIsVisible}
+        buttonText={buttonText}
+        setButtonText={setButtonText}
         />
       }
     </div>
