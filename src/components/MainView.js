@@ -4,16 +4,15 @@ import Logout from './Logout';
 import BlogCreation from './BlogCreation';
 import Notification from './Notification';
 
-function populateBlogs(blogs, adderName) {
+function populateBlogs(blogs, adderName, setBlogs) {
     const blogElements = [];
     for(let i=0; i<blogs.length; i++) {
         const blog = blogs[i];
         blogElements.push(<Blog 
-            title={blog.title}
-            author={blog.author}
+            blog={blog}
             name={adderName}
-            likes={blog.likes}
-            url={blog.url}
+            setBlogs={setBlogs}
+            blogs={blogs}
             key={blog.id}
             />
             );
@@ -50,7 +49,7 @@ export default function MainView(props) {
                 buttonText={props.buttonText}
                 setButtonText={props.setButtonText}
             />
-            {populateBlogs(props.blogs, props.user.name)}
+            {populateBlogs(props.blogs, props.user.name, props.setBlogs)}
         </div>
     );
 }

@@ -21,8 +21,20 @@ const createBlog = async (newBlog) => {
   return request.then(response => response.data);
 }
 
+const likeBlog = async (blogData) => {
+  const config = {
+    headers: {Authorization: queryToken}
+  };
+
+  const url = `${baseUrl}/${blogData.id}`;
+
+  const request = axios.put(url, blogData, config);
+  return request.then(response => response.data);
+}
+
 export default { 
   getAll,
   setToken,
-  createBlog
+  createBlog,
+  likeBlog
 }

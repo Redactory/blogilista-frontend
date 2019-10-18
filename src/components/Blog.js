@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import blogService from '../services/blogs';
 
 function handleView(setExpandedPresentation, expandedPresentation) {
   const newValue = !expandedPresentation;
@@ -16,6 +17,25 @@ function divStyling() {
   return styles;
 }
 
+async function incrementLikes(blogs, blogTitle, setBlogs, setExpandedPresentation, expandedPresentation) {
+  for (let i=0; i<blogs.length; i++) {
+    if (blogs[i].title !== blogTitle) {
+      continue;
+    }
+
+    const blog = blogs[i];
+    blog.likes = blog.likes + 1;
+
+    const savedBlog = await blogService.likeBlog(blog);
+
+    const newBlogList = [...blogs];
+    newBlogList[i] = savedBlog;
+    
+    setBlogs(newBlogList);
+    handleView(setExpandedPresentation, false)
+  }
+}
+
 function Blog(props){
   const[expandedPresentation, setExpandedPresentation] = useState(false);
 
@@ -23,21 +43,21 @@ function Blog(props){
     expandedPresentation ?
     <div onClick={() => handleView(setExpandedPresentation, expandedPresentation)} style={divStyling()}>
       <div>
-        {props.title} {props.author}
+        {props.blog.title} {props.blog.author}
       </div>
       <div>
-        {props.url}
+        {props.blog.url}
       </div>
       <div>
-        {props.likes} likes
-        <button>like</button>
+        {props.blog.likes} likes
+        <button onClick={() => incrementLikes(props.blogs, props.blog.title, props.setBlogs, setExpandedPresentation, expandedPresentation)}>like</button>
       </div>
       <div>
         added by {props.name}
       </div>
     </div> :
     <div onClick={() => handleView(setExpandedPresentation, expandedPresentation)} style={divStyling()}>
-      {props.title} {props.author}
+      {props.blog.title} {props.blog.author}
     </div>
   )
 }

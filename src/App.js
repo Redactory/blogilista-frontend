@@ -119,6 +119,7 @@ function App() {
         setBlogIsVisible={setBlogIsVisible}
         buttonText={buttonText}
         setButtonText={setButtonText}
+        setBlogs={setBlogs}
         />
       }
     </div>
