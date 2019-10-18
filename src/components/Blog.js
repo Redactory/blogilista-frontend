@@ -17,7 +17,7 @@ function divStyling() {
   return styles;
 }
 
-async function incrementLikes(blogs, blogTitle, setBlogs, setExpandedPresentation, expandedPresentation) {
+async function incrementLikes(blogs, blogTitle, setBlogs, setExpandedPresentation) {
   for (let i=0; i<blogs.length; i++) {
     if (blogs[i].title !== blogTitle) {
       continue;
@@ -36,7 +36,26 @@ async function incrementLikes(blogs, blogTitle, setBlogs, setExpandedPresentatio
     });
     
     setBlogs(newBlogList);
-    handleView(setExpandedPresentation, false)
+    handleView(setExpandedPresentation, false);
+  }
+}
+
+async function removeBlog(blogs, id, setBlogs) {
+  if (!window.confirm('Haluatko varmasti poistaa tämän blogin?')) {
+    return;
+  }
+
+  for (let i=0; i<blogs.length; i++) {
+    if (blogs[i].id !== id) {
+      continue;
+    }
+
+    await blogService.deleteBlog(id);
+
+    const newBlogList = [...blogs];
+    newBlogList.splice(i, 1);
+    
+    setBlogs(newBlogList);
   }
 }
 
@@ -59,6 +78,7 @@ function Blog(props){
       <div>
         added by {props.name}
       </div>
+      <button onClick={() => removeBlog(props.blogs, props.blog.id, props.setBlogs)}>remove</button>
     </div> :
     <div onClick={() => handleView(setExpandedPresentation, expandedPresentation)} style={divStyling()}>
       {props.blog.title} {props.blog.author}

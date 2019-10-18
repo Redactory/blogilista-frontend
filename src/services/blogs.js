@@ -32,9 +32,21 @@ const likeBlog = async (blogData) => {
   return request.then(response => response.data);
 }
 
+const deleteBlog = async (id) => {
+  const config = {
+    headers: {Authorization: queryToken}
+  };
+
+  const url = `${baseUrl}/${id}`;
+
+  const request = axios.delete(url, config);
+  return request.then(response => response.data);
+}
+
 export default { 
   getAll,
   setToken,
   createBlog,
-  likeBlog
+  likeBlog,
+  deleteBlog
 }
