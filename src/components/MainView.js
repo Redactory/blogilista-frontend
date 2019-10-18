@@ -4,7 +4,7 @@ import Logout from './Logout';
 import BlogCreation from './BlogCreation';
 import Notification from './Notification';
 
-function populateBlogs(blogs, adderName, setBlogs) {
+function populateBlogs(blogs, adderName, setBlogs, user) {
     const blogElements = [];
     for(let i=0; i<blogs.length; i++) {
         const blog = blogs[i];
@@ -14,6 +14,7 @@ function populateBlogs(blogs, adderName, setBlogs) {
             setBlogs={setBlogs}
             blogs={blogs}
             key={blog.id}
+            loggedUser={user}
             />
             );
     }
@@ -49,7 +50,7 @@ export default function MainView(props) {
                 buttonText={props.buttonText}
                 setButtonText={props.setButtonText}
             />
-            {populateBlogs(props.blogs, props.user.name, props.setBlogs)}
+            {populateBlogs(props.blogs, props.user.name, props.setBlogs, props.user)}
         </div>
     );
 }

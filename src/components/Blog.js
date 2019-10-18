@@ -59,8 +59,17 @@ async function removeBlog(blogs, id, setBlogs) {
   }
 }
 
+function showRemoveButton(user, blogAdder) {
+  if (user.name !== blogAdder) {
+    return ({ display: 'none' });
+  }
+
+  return {};
+}
+
 function Blog(props){
   const[expandedPresentation, setExpandedPresentation] = useState(false);
+  const showButton = showRemoveButton(props.loggedUser, props.blog.user.name);  
 
   return (
     expandedPresentation ?
@@ -76,9 +85,9 @@ function Blog(props){
         <button onClick={() => incrementLikes(props.blogs, props.blog.title, props.setBlogs, setExpandedPresentation, expandedPresentation)}>like</button>
       </div>
       <div>
-        added by {props.name}
+        added by {props.blog.user.name}
       </div>
-      <button onClick={() => removeBlog(props.blogs, props.blog.id, props.setBlogs)}>remove</button>
+      <button onClick={() => removeBlog(props.blogs, props.blog.id, props.setBlogs)} style={showButton}>remove</button>
     </div> :
     <div onClick={() => handleView(setExpandedPresentation, expandedPresentation)} style={divStyling()}>
       {props.blog.title} {props.blog.author}
