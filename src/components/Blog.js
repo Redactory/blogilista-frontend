@@ -30,6 +30,10 @@ async function incrementLikes(blogs, blogTitle, setBlogs, setExpandedPresentatio
 
     const newBlogList = [...blogs];
     newBlogList[i] = savedBlog;
+
+    newBlogList.sort(function(a, b) {
+      return b.likes - a.likes;
+    });
     
     setBlogs(newBlogList);
     handleView(setExpandedPresentation, false)

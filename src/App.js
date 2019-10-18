@@ -61,6 +61,10 @@ function App() {
 
       window.localStorage.setItem('loggedUser', JSON.stringify(user));
 
+      blogs.sort(function(a, b) {
+        return b.likes - a.likes;
+      });
+
       setUser(user);
       setBlogs(blogs);
       setUsername('');
