@@ -1,5 +1,10 @@
 import React from 'react';
 import Notification from './Notification'
+import PropTypes from 'prop-types';
+
+Login.propTypes = {
+    handleUsername: PropTypes.func.isRequired
+  }
 
 export default function Login(props) {
     return (
