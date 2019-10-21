@@ -20,7 +20,7 @@ function App() {
   const [blogIsVisible, setBlogIsVisible] = useState(false);
   const [buttonText, setButtonText] = useState('new note');
 
-  useEffect(()=> {
+  useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser');
     if(loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
@@ -31,11 +31,11 @@ function App() {
 
   function handleUsername(event) {
     setUsername(event.target.value);
-  };
+  }
 
   function handlePassword(event) {
     setPassword(event.target.value);
-  };
+  }
 
   function handleTitle(event) {
     setTitle(event.target.value);
@@ -56,7 +56,7 @@ function App() {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-      const user = await loginService.login({username, password});
+      const user = await loginService.login({ username, password });
       const blogs = await Blogs.getAll();
 
       window.localStorage.setItem('loggedUser', JSON.stringify(user));
@@ -79,7 +79,7 @@ function App() {
   const handleCreateBlog = async (event) => {
     event.preventDefault();
 
-    const newBlogData = {title, author, url};
+    const newBlogData = { title, author, url };
     const savedBlog = await Blogs.createBlog(newBlogData);
 
     const newBlogList = blogs.map(element => element);
@@ -90,44 +90,44 @@ function App() {
     notificationService.showNotification(message, 'passing', setNotificationMessage, setNotificationType);
 
     return savedBlog;
-  }
+  };
 
   return (
     <div>
       {
-        user === null ? 
-        <Login
-          username={username}
-          password={password}
-          handleUsername={handleUsername}
-          handlePassword={handlePassword}
-          handleLogin={handleLogin}
-          notificationMessage={notificationMessage}
-          notificationType={notificationType}
-        /> : 
-        <MainView
-        user={user}
-        blogs={blogs}
-        setUser={setUser}
-        logout={loginService.logout}
-        title={title}
-        author={author}
-        url={url}
-        handleTitle={handleTitle}
-        handleAuthor={handleAuthor}
-        handleUrl={handleUrl}
-        handleCreateBlog={handleCreateBlog}
-        notificationMessage={notificationMessage}
-        notificationType={notificationType}
-        blogIsVisible={blogIsVisible}
-        setBlogIsVisible={setBlogIsVisible}
-        buttonText={buttonText}
-        setButtonText={setButtonText}
-        setBlogs={setBlogs}
-        />
+        user === null ?
+          <Login
+            username={username}
+            password={password}
+            handleUsername={handleUsername}
+            handlePassword={handlePassword}
+            handleLogin={handleLogin}
+            notificationMessage={notificationMessage}
+            notificationType={notificationType}
+          /> :
+          <MainView
+            user={user}
+            blogs={blogs}
+            setUser={setUser}
+            logout={loginService.logout}
+            title={title}
+            author={author}
+            url={url}
+            handleTitle={handleTitle}
+            handleAuthor={handleAuthor}
+            handleUrl={handleUrl}
+            handleCreateBlog={handleCreateBlog}
+            notificationMessage={notificationMessage}
+            notificationType={notificationType}
+            blogIsVisible={blogIsVisible}
+            setBlogIsVisible={setBlogIsVisible}
+            buttonText={buttonText}
+            setButtonText={setButtonText}
+            setBlogs={setBlogs}
+          />
       }
     </div>
-  )
+  );
 }
 
 export default App;

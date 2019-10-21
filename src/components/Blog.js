@@ -12,7 +12,7 @@ function divStyling() {
     borderRadius: '5px',
     padding: '10px',
     marginBottom: '10px'
-  }
+  };
 
   return styles;
 }
@@ -34,7 +34,7 @@ async function incrementLikes(blogs, blogTitle, setBlogs, setExpandedPresentatio
     newBlogList.sort(function(a, b) {
       return b.likes - a.likes;
     });
-    
+
     setBlogs(newBlogList);
     handleView(setExpandedPresentation, false);
   }
@@ -54,7 +54,7 @@ async function removeBlog(blogs, id, setBlogs) {
 
     const newBlogList = [...blogs];
     newBlogList.splice(i, 1);
-    
+
     setBlogs(newBlogList);
   }
 }
@@ -69,30 +69,30 @@ function showRemoveButton(user, blogAdder) {
 
 function Blog(props){
   const[expandedPresentation, setExpandedPresentation] = useState(false);
-  const showButton = showRemoveButton(props.loggedUser, props.blog.user.name);  
+  const showButton = showRemoveButton(props.loggedUser, props.blog.user.name);
 
   return (
     expandedPresentation ?
-    <div onClick={() => handleView(setExpandedPresentation, expandedPresentation)} style={divStyling()}>
-      <div>
+      <div onClick={() => handleView(setExpandedPresentation, expandedPresentation)} style={divStyling()}>
+        <div>
+          {props.blog.title} {props.blog.author}
+        </div>
+        <div>
+          {props.blog.url}
+        </div>
+        <div>
+          {props.blog.likes} likes
+          <button onClick={() => incrementLikes(props.blogs, props.blog.title, props.setBlogs, setExpandedPresentation, expandedPresentation)}>like</button>
+        </div>
+        <div>
+        added by {props.blog.user.name}
+        </div>
+        <button onClick={() => removeBlog(props.blogs, props.blog.id, props.setBlogs)} style={showButton}>remove</button>
+      </div> :
+      <div onClick={() => handleView(setExpandedPresentation, expandedPresentation)} style={divStyling()}>
         {props.blog.title} {props.blog.author}
       </div>
-      <div>
-        {props.blog.url}
-      </div>
-      <div>
-        {props.blog.likes} likes
-        <button onClick={() => incrementLikes(props.blogs, props.blog.title, props.setBlogs, setExpandedPresentation, expandedPresentation)}>like</button>
-      </div>
-      <div>
-        added by {props.blog.user.name}
-      </div>
-      <button onClick={() => removeBlog(props.blogs, props.blog.id, props.setBlogs)} style={showButton}>remove</button>
-    </div> :
-    <div onClick={() => handleView(setExpandedPresentation, expandedPresentation)} style={divStyling()}>
-      {props.blog.title} {props.blog.author}
-    </div>
-  )
+  );
 }
 
-export default Blog
+export default Blog;
