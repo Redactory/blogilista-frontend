@@ -77,19 +77,19 @@ function Blog(props){
         <div>
           {props.blog.title} {props.blog.author}
         </div>
-        <div>
+        <div className='blogURL'>
           {props.blog.url}
         </div>
-        <div>
+        <div className='blogLikes'>
           {props.blog.likes} likes
           <button onClick={() => incrementLikes(props.blogs, props.blog.title, props.setBlogs, setExpandedPresentation, expandedPresentation)}>like</button>
         </div>
-        <div>
+        <div className='blogAdder'>
         added by {props.blog.user.name}
         </div>
-        <button onClick={() => removeBlog(props.blogs, props.blog.id, props.setBlogs)} style={showButton}>remove</button>
+        <button className='blogRemove' onClick={() => removeBlog(props.blogs, props.blog.id, props.setBlogs)} style={showButton}>remove</button>
       </div> :
-      <div onClick={() => handleView(setExpandedPresentation, expandedPresentation)} style={divStyling()}>
+      <div className='blogDataShow' onClick={() => handleView(setExpandedPresentation, expandedPresentation)} style={divStyling()}>
         {props.blog.title} {props.blog.author}
       </div>
   );
