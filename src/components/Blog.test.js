@@ -32,8 +32,6 @@ test('check that only limited view shows', () => {
     />
   );
 
-  //const element = component.getByText('3 likes')  
-
   expect(component.container).toHaveTextContent(
     'Three Men Lex Luthor'
   );

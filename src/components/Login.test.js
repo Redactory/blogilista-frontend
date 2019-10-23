@@ -1,7 +1,6 @@
 import React from 'react';
 import { render, waitForElement } from '@testing-library/react';
 import App from '../App';
-//jest.mock('./services/blogs');
 
 describe('Integration testing', () => {
   test('if no user logged, blogs are not rendered', async () => {
