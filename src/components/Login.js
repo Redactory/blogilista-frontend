@@ -3,7 +3,7 @@ import Notification from './Notification';
 import PropTypes from 'prop-types';
 
 Login.propTypes = {
-  handleUsername: PropTypes.func.isRequired
+  handleLogin: PropTypes.func.isRequired
 };
 
 export default function Login(props) {
@@ -16,11 +16,11 @@ export default function Login(props) {
       />
       <div>
         <label>Username </label>
-        <input value={props.username} onChange={props.handleUsername}></input>
+        <input value={props.username.value} onChange={props.username.onChange}></input>
       </div>
       <div>
         <label>password </label>
-        <input value={props.password} onChange={props.handlePassword}></input>
+        <input value={props.password.value} onChange={props.password.onChange}></input>
       </div>
       <button type="submit">login</button>
     </form>

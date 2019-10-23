@@ -6,10 +6,9 @@ import Blogs from './services/blogs';
 import MainView from './components/MainView';
 import loginService from './services/loginService';
 import notificationService from './services/notificationService';
+import useField from './hooks/index';
 
 function App() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
   const [user, setUser] = useState(null);
   const [blogs, setBlogs] = useState([]);
   const [title, setTitle] = useState('');
@@ -20,6 +19,9 @@ function App() {
   const [blogIsVisible, setBlogIsVisible] = useState(false);
   const [buttonText, setButtonText] = useState('new note');
 
+  const usernameField = useField('text');
+  const passwordField = useField('text');
+
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser');
     if(loggedUserJSON) {
@@ -28,14 +30,6 @@ function App() {
       handleToken(user.token);
     }
   }, []);
-
-  function handleUsername(event) {
-    setUsername(event.target.value);
-  }
-
-  function handlePassword(event) {
-    setPassword(event.target.value);
-  }
 
   function handleTitle(event) {
     setTitle(event.target.value);
@@ -56,6 +50,8 @@ function App() {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
+      const username = usernameField.value;
+      const password = passwordField.value;
       const user = await loginService.login({ username, password });
       const blogs = await Blogs.getAll();
 
@@ -67,8 +63,8 @@ function App() {
 
       setUser(user);
       setBlogs(blogs);
-      setUsername('');
-      setPassword('');
+      usernameField.changeValue('');
+      passwordField.changeValue('');
       handleToken(user.token);
     } catch(error) {
       notificationService.showNotification(error.response.data.error, 'error', setNotificationMessage, setNotificationType);
@@ -97,10 +93,8 @@ function App() {
       {
         user === null ?
           <Login
-            username={username}
-            password={password}
-            handleUsername={handleUsername}
-            handlePassword={handlePassword}
+            username={{ ...usernameField }}
+            password={{ ...passwordField }}
             handleLogin={handleLogin}
             notificationMessage={notificationMessage}
             notificationType={notificationType}
