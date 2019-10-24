@@ -11,9 +11,6 @@ import useField from './hooks/index';
 function App() {
   const [user, setUser] = useState(null);
   const [blogs, setBlogs] = useState([]);
-  const [title, setTitle] = useState('');
-  const [author, setAuthor] = useState('');
-  const [url, setUrl] = useState('');
   const [notificationMessage, setNotificationMessage] = useState('');
   const [notificationType, setNotificationType] = useState('');
   const [blogIsVisible, setBlogIsVisible] = useState(false);
@@ -21,6 +18,9 @@ function App() {
 
   const usernameField = useField('text');
   const passwordField = useField('text');
+  const titleField = useField('text');
+  const authorField = useField('text');
+  const urlField = useField('text');
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser');
@@ -30,18 +30,6 @@ function App() {
       handleToken(user.token);
     }
   }, []);
-
-  function handleTitle(event) {
-    setTitle(event.target.value);
-  }
-
-  function handleAuthor(event) {
-    setAuthor(event.target.value);
-  }
-
-  function handleUrl(event) {
-    setUrl(event.target.value);
-  }
 
   function handleToken(token) {
     Blogs.setToken(token);
@@ -75,6 +63,10 @@ function App() {
   const handleCreateBlog = async (event) => {
     event.preventDefault();
 
+    const title = titleField.value;
+    const author = authorField.value;
+    const url = urlField.value;
+
     const newBlogData = { title, author, url };
     const savedBlog = await Blogs.createBlog(newBlogData);
 
@@ -104,12 +96,9 @@ function App() {
             blogs={blogs}
             setUser={setUser}
             logout={loginService.logout}
-            title={title}
-            author={author}
-            url={url}
-            handleTitle={handleTitle}
-            handleAuthor={handleAuthor}
-            handleUrl={handleUrl}
+            titleField={titleField}
+            authorField={authorField}
+            urlField={urlField}
             handleCreateBlog={handleCreateBlog}
             notificationMessage={notificationMessage}
             notificationType={notificationType}

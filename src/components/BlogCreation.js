@@ -8,10 +8,13 @@ function handleShowing(blogIsVisible, setBlogIsVisible, setButtonText) {
   setButtonText(buttonText);
 }
 
+const clear = (props) => {
+  props.titleField.reset();
+  props.authorField.reset();
+  props.urlField.reset();
+};
+
 export default function BlogCreation(props) {
-  const title = props.title;
-  const author = props.author;
-  const url = props.url;
   const isVisible = { display: props.blogIsVisible ? '' : 'none' };
 
   return(
@@ -20,18 +23,19 @@ export default function BlogCreation(props) {
         <h2>create new</h2>
         <div>
                     title:
-          <input value={title} onChange={props.handleTitle}></input>
+          <input value={props.titleField.value} onChange={props.titleField.onChange}></input>
         </div>
         <div>
                     author:
-          <input value={author} onChange={props.handleAuthor}></input>
+          <input value={props.authorField.value} onChange={props.authorField.onChange}></input>
         </div>
         <div>
                     url:
-          <input value={url} onChange={props.handleUrl}></input>
+          <input value={props.urlField.value} onChange={props.urlField.onChange}></input>
         </div>
         <button type="submit">create</button>
       </form>
+      <button onClick={() => clear(props)} style={isVisible}>reset</button>
       <button onClick={() => handleShowing(props.blogIsVisible, props.setBlogIsVisible, props.setButtonText)}>{props.buttonText}</button>
     </div>
   );

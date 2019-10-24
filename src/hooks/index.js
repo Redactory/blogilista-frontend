@@ -11,11 +11,16 @@ const useField = (type) => {
     setValue(value);
   };
 
+  const reset = () => {
+    setValue('');
+  };
+
   return {
     type,
     value,
     onChange,
-    changeValue
+    changeValue,
+    reset
   };
 };
 

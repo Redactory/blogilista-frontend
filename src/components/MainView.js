@@ -38,12 +38,9 @@ export default function MainView(props) {
         <Logout setUser={props.setUser} logout={props.logout}/>
       </div>
       <BlogCreation
-        title={props.title}
-        author={props.author}
-        url={props.url}
-        handleTitle={props.handleTitle}
-        handleAuthor={props.handleAuthor}
-        handleUrl={props.handleUrl}
+        titleField={props.titleField}
+        authorField={props.authorField}
+        urlField={props.urlField}
         handleCreateBlog={props.handleCreateBlog}
         blogIsVisible={props.blogIsVisible}
         setBlogIsVisible={props.setBlogIsVisible}
